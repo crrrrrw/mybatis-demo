@@ -2,7 +2,7 @@ package com.crw.mybatis.mapper;
 
 import com.crw.mybatis.model.Student;
 
-public class StudentMapper {
+public interface StudentMapper {
 
-    Student getById;
+    Student getById(Long id);
 }
