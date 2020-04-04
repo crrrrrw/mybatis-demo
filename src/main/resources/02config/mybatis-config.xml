@@ -111,8 +111,21 @@
 						比较重要的，复杂的Dao接口我们来写sql映射文件
 						不重要，简单的Dao接口为了开发快速可以使用注解；
 		-->
-		 <mapper resource="02config/mapper/StudentMapper.xml" />
-		 <mapper class="com.crw.mybatis.mapper.StudentMapperAnnoation"/>
+		 <!--<mapper resource="02config/mapper/StudentMapper.xml" />
+		 <mapper class="com.crw.mybatis.mapper.StudentMapperAnnoation"/>-->
 
+		<!-- 批量注册
+		 String xmlResource = type.getName().replace('.', '/') + ".xml";
+		 if (inputStream == null) {
+         	// Search XML mapper that is not in the module but in the classpath.
+         	try {
+            	inputStream = Resources.getResourceAsStream(type.getClassLoader(), xmlResource);
+         	} catch (IOException e2) {
+           		// ignore, resource is not required
+            }
+         }
+		 所以必须 xml 必须是 在资源目录或者类路径下的 Mapper接口全类名.xml，比如 com.crw.mybatis.mapper.xml
+		 -->
+		<package name="com.crw.mybatis.mapper" />
 	</mappers>
 </configuration>
