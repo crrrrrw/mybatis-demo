@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.crw.mybatis.mapper.StudentMapper">
+    <select id="getById" resultType="com.crw.mybatis.model.Student" databaseId="mysql">
+        select id,age,name from student where id = #{id}
+    </select>
+
+    <!--public Map<Long, Student> getByNameLikeReturnMap(String name);  -->
+    <select id="getByNameLikeReturnMap" resultType="com.crw.mybatis.model.Student">
+        select * from student where name like #{name}
+    </select>
+
+    <!--public Map<String, Object> getByIdReturnMap(Long id);  -->
+    <select id="getByIdReturnMap" resultType="map">
+        select * from student where id=#{id}
+    </select>
+
+    <!-- public List<Student> getListByNameLike(String name); -->
+    <!--resultType：如果返回的是一个集合，要写集合中元素的类型  -->
+    <select id="getListByNameLike" resultType="com.crw.mybatis.model.Student">
+        select * from student where name like #{name}
+    </select>
+
+    <!-- public Student getByMap(Map<String, Object> map); -->
+    <select id="getByMap" resultType="com.crw.mybatis.model.Student">
+        select * from ${tableName} where id=${id} and name=#{name}
+    </select>
+
+    <!--  public Student getByIdAndName(Long id,String name);-->
+    <select id="getByIdAndName" resultType="com.crw.mybatis.model.Student">
+        select * from student where id = #{id} and name=#{name}
+    </select>
+
+    <!-- public void insert(Student student); -->
+    <!-- parameterType：参数类型，可以省略， 
+    获取自增主键的值：
+        mysql支持自增主键，自增主键值的获取，mybatis也是利用statement.getGenreatedKeys()；
+        useGeneratedKeys="true"；使用自增主键获取主键值策略
+        keyProperty；指定对应的主键属性，也就是mybatis获取到主键值以后，将这个值封装给javaBean的哪个属性
+    -->
+    <insert id="insert" parameterType="com.crw.mybatis.model.Student"
+            useGeneratedKeys="true" keyProperty="id" databaseId="mysql">
+        insert into student(name,age)
+        values(#{name},#{age})
+    </insert>
+
+    <!-- public int update(Student student);  -->
+    <update id="update">
+        update student
+        set name=#{name},age=#{age}
+        where id=#{id}
+    </update>
+
+    <!-- public int deleteById(Integer id); -->
+    <delete id="deleteById">
+        delete from student where id=#{id}
+    </delete>
+
+</mapper>
