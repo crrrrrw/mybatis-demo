@@ -14,10 +14,11 @@ public class MybatisTest {
 
     public static void main(String[] args) throws IOException {
         test01();
+        test02();
     }
 
     public static SqlSessionFactory getSqlSessionFactory() throws IOException {
-        String resource = "mybatis-config.xml";
+        String resource = "01helloworld/mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         return new SqlSessionFactoryBuilder().build(inputStream);
     }
