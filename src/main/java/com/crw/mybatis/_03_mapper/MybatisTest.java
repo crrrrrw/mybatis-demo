@@ -19,6 +19,51 @@ import java.util.Map;
  * ParameterHandler：设置预编译参数用的
  * ResultHandler：处理结果集
  * TypeHandler：在整个过程中，进行数据库类型和javaBean类型的映射
+ * <p>
+ * <p>
+ * 补充点解释：
+ * 单个参数：mybatis不会做特殊处理，
+ *          #{参数名/任意名}：取出参数值。
+ * <p>
+ * 多个参数：mybatis会做特殊处理。
+ *          多个参数会被封装成 一个map，
+ *              key：param1...paramN,或者参数的索引也可以
+ *              value：传入的参数值
+ *          #{}就是从map中获取指定的key的值；
+ * <p>
+ * 【命名参数】：明确指定封装参数时map的key；@Param("id")
+ *              多个参数会被封装成 一个map：
+ *              key：使用@Param注解指定的值
+ *              value：参数值
+ *             #{指定的key}取出对应的参数值
+ * <p>
+ * POJO：
+ * 如果多个参数正好是我们业务逻辑的数据模型，我们就可以直接传入pojo；
+ * #{属性名}：取出传入的pojo的属性值
+ * <p>
+ * Map：
+ * 如果多个参数不是业务模型中的数据，没有对应的pojo，不经常使用，为了方便，我们也可以传入map
+ * #{key}：取出map中对应的值
+ * <p>
+ * TO：
+ * 如果多个参数不是业务模型中的数据，但是经常要使用，推荐来编写一个TO（Transfer Object）数据传输对象
+ * Page{
+ * int index;
+ * int size;
+ * }
+ * <p>
+ * ========================思考================================
+ * public Student get(@Param("id")Integer id,String lastName);
+ * 取值：id==>#{id/param1}   lastName==>#{param2}
+ * <p>
+ * public Student get(Integer id,@Param("s")Student stud);
+ * 取值：id==>#{param1}    lastName===>#{param2.name/s.name}
+ * <p>
+ * ##特别注意：如果是Collection（List、Set）类型或者是数组，也会特殊处理。也是把传入的list或者数组封装在map中。
+ * key：Collection（collection）,如果是List还可以使用这个key(list)
+ * 数组(array)
+ * public Student getById(List<Integer> ids);
+ * 取值：取出第一个id的值：   #{list[0]}
  */
 public class MybatisTest {
 
